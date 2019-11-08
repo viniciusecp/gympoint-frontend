@@ -24,5 +24,6 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
+    'no-console': ['error', { allow: ['tron'] }],
   },
 };
