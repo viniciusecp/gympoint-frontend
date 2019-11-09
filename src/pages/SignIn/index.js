@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import * as Yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+// import * as Yup from 'yup';
+
+import { signInRequest } from '../../store/modules/auth/actions';
 
 import Field from '../../components/Field';
 import SubmitButton from '../../components/SubmitButton';
@@ -17,10 +20,14 @@ export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const dispatch = useDispatch();
+
+  const loading = useSelector(state => state.auth.loading);
+
   async function handleSubmit(e) {
     e.preventDefault();
 
-    console.tron.log(email, password);
+    dispatch(signInRequest(email, password));
   }
 
   return (
@@ -45,7 +52,11 @@ export default function SignIn() {
           value={password}
           setValue={setPassword}
         />
-        <SubmitButton label="Entrar no sistema" justifyContent="center" />
+        <SubmitButton
+          loading={loading ? 1 : 0}
+          label="Entrar no sistema"
+          justifyContent="center"
+        />
       </form>
     </>
   );

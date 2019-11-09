@@ -1,6 +1,17 @@
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
-export const Container = styled.button`
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+export const Container = styled.button.attrs(props => ({
+  disabled: props.loading,
+}))`
   margin-top: 20px;
   padding: 0 15px;
   height: 45px;
@@ -14,4 +25,12 @@ export const Container = styled.button`
 
   display: flex;
   justify-content: ${({ justifyContent }) => justifyContent || 'flex-end'};
+
+  ${props =>
+    props.loading &&
+    css`
+      svg {
+        animation: ${rotate} 2s linear infinite;
+      }
+    `}
 `;
