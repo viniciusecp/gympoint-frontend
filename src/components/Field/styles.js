@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.label.attrs(props => ({
-  placeholder: '#f00',
-}))`
+export const Container = styled.label`
   display: block;
 
   font-size: 14px;
