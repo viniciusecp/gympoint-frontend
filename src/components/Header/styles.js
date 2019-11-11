@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
   background: #fff;
@@ -27,15 +26,6 @@ export const Menu = styled.div`
   nav {
     display: flex;
     align-items: center;
-
-    /* button {
-      border: 0;
-      background: transparent;
-      font-size: 15px;
-      font-weight: bold;
-      color: ${({ active }) => (active ? '#444' : '#999')};
-      margin-right: 20px;
-    } */
   }
 `;
 

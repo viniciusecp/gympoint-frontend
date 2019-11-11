@@ -25,5 +25,9 @@ export const Content = styled.div`
 
   form {
     width: 100%;
+
+    button {
+      margin-top: 20px;
+    }
   }
 `;

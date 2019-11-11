@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { signInRequest } from '../../store/modules/auth/actions';
 
 import Field from '../../components/Field';
-import SubmitButton from '../../components/SubmitButton';
+import Button from '../../components/Button';
 
 import logo from '../../assets/logo.svg';
 
@@ -52,10 +52,12 @@ export default function SignIn() {
           value={password}
           setValue={setPassword}
         />
-        <SubmitButton
+        <Button
           loading={loading ? 1 : 0}
           label="Entrar no sistema"
+          type="submit"
           justifyContent="center"
+          height="45px"
         />
       </form>
     </>

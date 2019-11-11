@@ -12,9 +12,9 @@ const rotate = keyframes`
 export const Container = styled.button.attrs(props => ({
   disabled: props.loading,
 }))`
-  margin-top: 20px;
+  /* margin-top: 20px; */
   padding: 0 15px;
-  height: 45px;
+  height: ${({ height }) => height || '36px'};
   width: ${({ width }) => width || '100%'};
   background: #ee4d64;
   border: 0;

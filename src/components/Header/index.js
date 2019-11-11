@@ -39,7 +39,8 @@ export default function Header() {
         <nav>
           {pages.map(page => (
             <MenuItem
-              active={page.path === active && true}
+              key={page.path}
+              active={page.path === active}
               onClick={() => handleChangePage(page.path)}
               type="button"
             >

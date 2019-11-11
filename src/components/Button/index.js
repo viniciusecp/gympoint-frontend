@@ -4,19 +4,21 @@ import { FaSpinner } from 'react-icons/fa';
 
 import { Container } from './styles';
 
-export default function SubmitButton({ label, loading, ...rest }) {
+export default function Button({ type, label, loading, ...rest }) {
   return (
-    <Container type="submit" loading={loading} {...rest}>
+    <Container type={type} loading={loading} {...rest}>
       {loading ? <FaSpinner color="#fff" size={14} /> : label}
     </Container>
   );
 }
 
-SubmitButton.propTypes = {
+Button.propTypes = {
   label: PropTypes.string.isRequired,
   loading: PropTypes.number,
+  type: PropTypes.string,
 };
 
-SubmitButton.defaultProps = {
+Button.defaultProps = {
   loading: 0,
+  type: 'button',
 };
