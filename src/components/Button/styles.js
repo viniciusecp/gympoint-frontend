@@ -16,7 +16,7 @@ export const Container = styled.button.attrs(props => ({
   padding: 0 15px;
   height: ${({ height }) => height || '36px'};
   width: ${({ width }) => width || '100%'};
-  background: #ee4d64;
+  background: ${({ background }) => background || '#ee4d64'};
   border: 0;
   border-radius: 4px;
   color: #fff;

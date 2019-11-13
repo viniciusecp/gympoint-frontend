@@ -14,7 +14,7 @@ export const Container = styled.label`
     height: 45px;
     width: 100%;
     background: #fff;
-    color: #666;
+    color: #333;
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 5px 15px;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2/dist/sweetalert2';
 
+import history from '../../services/history';
 import api from '../../services/api';
 import showError from '../../errors';
 
@@ -41,12 +42,12 @@ export default function Students() {
     loadStudents();
   }, []);
 
-  function handleAdd(id) {
-    console.log('adicionar');
+  function handleAdd() {
+    history.push('/students/add');
   }
 
   function handleEdit(id) {
-    console.log('editar', id);
+    history.push(`/students/${id}/modify`);
   }
 
   async function handleDelete(id) {
