@@ -12,15 +12,23 @@ export default function Students() {
 
   useEffect(() => {
     async function loadStudents() {
-      // const response = await api.get('/students');
-      // console.tron.log(response.data);
+      const response = await api.get('/students');
+      console.tron.log(response);
     }
 
     loadStudents();
   }, []);
 
-  function handleAddStudent() {
-    console.log('chamou mesmo');
+  function handleAddStudent(id) {
+    console.log('adicionar');
+  }
+
+  function handleEditStudent(id) {
+    console.log('editar', id);
+  }
+
+  function handleDeleteStudent(id) {
+    console.log('deletar', id);
   }
 
   return (
@@ -68,12 +76,12 @@ export default function Students() {
               {
                 label: 'editar',
                 color: '#4D85EE',
-                onClick: () => {},
+                onClick: handleEditStudent,
               },
               {
                 label: 'apagar',
                 color: '#DE3B3B',
-                onClick: () => {},
+                onClick: handleDeleteStudent,
               },
             ],
           },
@@ -86,12 +94,12 @@ export default function Students() {
               {
                 label: 'editar',
                 color: '#4D85EE',
-                onClick: () => {},
+                onClick: handleEditStudent,
               },
               {
                 label: 'apagar',
                 color: '#DE3B3B',
-                onClick: () => {},
+                onClick: handleDeleteStudent,
               },
             ],
           },

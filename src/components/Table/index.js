@@ -1,8 +1,36 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Container, TableContent, ActionButton } from './styles';
 
 export default function Table({ model, data }) {
+  function renderActions(actions, rowId) {
+    return actions.map(action => (
+      <ActionButton
+        key={`${action.label}-${new Date()}`}
+        color={action.color}
+        onClick={() => action.onClick(rowId)}
+        type="button"
+      >
+        {action.label}
+      </ActionButton>
+    ));
+  }
+
+  function renderRowData(rowData) {
+    return (
+      <tr key={rowData.id}>
+        {model.map(m => (
+          <td key={`${m.key}-${rowData.id}`}>
+            {m.key !== 'actions'
+              ? rowData[m.key]
+              : renderActions(rowData[m.key], rowData.id)}
+          </td>
+        ))}
+      </tr>
+    );
+  }
+
   return (
     <Container>
       <TableContent>
@@ -13,56 +41,13 @@ export default function Table({ model, data }) {
             ))}
           </tr>
         </thead>
-        <tbody>
-          {data.map((d, i) => (
-            <tr key={`${d.key}-${i}`}>
-              {model.map(m => (
-                <td key={`${d.key}-${m.key}`}>
-                  {m.key !== 'actions'
-                    ? d[m.key]
-                    : d[m.key].map(action => (
-                        <ActionButton
-                          key={`${d.key}-${m.key}-${action.label}`}
-                          color={action.color}
-                          onClick={action.onClick}
-                          type="button"
-                        >
-                          {action.label}
-                        </ActionButton>
-                      ))}
-                </td>
-              ))}
-            </tr>
-          ))}
-          <tr>
-            <td>Vinicius Faustino Silva</td>
-            <td>vinicius@gympoint.com</td>
-            <td>23</td>
-            <td>
-              <ActionButton color="#4D85EE" type="button">
-                editar
-              </ActionButton>
-              <ActionButton color="#DE3B3B" type="button">
-                apagar
-              </ActionButton>
-            </td>
-          </tr>
-
-          {/* <tr>
-            <td>Vinicius Faustino Silva</td>
-            <td>vinicius@gympoint.com</td>
-            <td>23</td>
-            <td>
-              <ActionButton color="#4D85EE" type="button">
-                editar
-              </ActionButton>
-              <ActionButton color="#DE3B3B" type="button">
-                apagar
-              </ActionButton>
-            </td>
-          </tr> */}
-        </tbody>
+        <tbody>{data.map(d => renderRowData(d))}</tbody>
       </TableContent>
     </Container>
   );
 }
+
+Table.propTypes = {
+  model: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
