@@ -1,11 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2/dist/sweetalert2';
 
 import api from '../../services/api';
+import showError from '../../errors';
 
 import Button from '../../components/Button';
 import Table from '../../components/Table';
 
 import { Container } from './styles';
+
+const headers = [
+  {
+    key: 'name',
+    label: 'NOME',
+  },
+  {
+    key: 'email',
+    label: 'E-MAIL',
+  },
+  {
+    key: 'age',
+    label: 'IDADE',
+  },
+  {
+    key: 'actions',
+    label: 'AÇÕES',
+  },
+];
 
 export default function Students() {
   const [students, setStudents] = useState([]);
@@ -13,23 +34,62 @@ export default function Students() {
   useEffect(() => {
     async function loadStudents() {
       const response = await api.get('/students');
-      console.tron.log(response);
+
+      setStudents(response.data);
     }
 
     loadStudents();
   }, []);
 
-  function handleAddStudent(id) {
+  function handleAdd(id) {
     console.log('adicionar');
   }
 
-  function handleEditStudent(id) {
+  function handleEdit(id) {
     console.log('editar', id);
   }
 
-  function handleDeleteStudent(id) {
+  async function handleDelete(id) {
     console.log('deletar', id);
+
+    const result = await Swal.fire({
+      title: 'Você tem certeza?',
+      text: 'Você não poderá reverter isso!',
+      icon: 'warning',
+      showCloseButton: true,
+      reverseButtons: true,
+      showCancelButton: true,
+      cancelButtonColor: '#ee4d64',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Sim, deletar!',
+    });
+
+    if (!result.value) return;
+
+    try {
+      await api.delete(`/students/${id}`);
+
+      setStudents(students.filter(student => student.id !== id));
+
+      Swal.fire('Apagado!', 'Estudante deletado.', 'success');
+    } catch (err) {
+      showError(err.response.status, err.response.data.error);
+    }
   }
+
+  const actions = [
+    {
+      label: 'editar',
+      color: '#4D85EE',
+      onClick: handleEdit,
+    },
+    {
+      label: 'apagar',
+      color: '#DE3B3B',
+      onClick: handleDelete,
+    },
+  ];
 
   return (
     <Container>
@@ -40,7 +100,7 @@ export default function Students() {
           <Button
             label="CADASTRAR"
             type="button"
-            onClick={handleAddStudent}
+            onClick={handleAdd}
             width="160px"
           />
           <input type="text" placeholder="Buscar aluno" />
@@ -48,62 +108,14 @@ export default function Students() {
       </header>
 
       <Table
-        model={[
-          {
-            key: 'name',
-            label: 'NOME',
-          },
-          {
-            key: 'email',
-            label: 'E-MAIL',
-          },
-          {
-            key: 'age',
-            label: 'IDADE',
-          },
-          {
-            key: 'actions',
-            label: 'AÇÕES',
-          },
-        ]}
-        data={[
-          {
-            id: 1,
-            name: 'Vinicius Faustino',
-            email: 'v@gympoint.com',
-            age: '23',
-            actions: [
-              {
-                label: 'editar',
-                color: '#4D85EE',
-                onClick: handleEditStudent,
-              },
-              {
-                label: 'apagar',
-                color: '#DE3B3B',
-                onClick: handleDeleteStudent,
-              },
-            ],
-          },
-          {
-            id: 2,
-            name: 'Joriane Cristina',
-            email: 'j@gympoint.com',
-            age: '24',
-            actions: [
-              {
-                label: 'editar',
-                color: '#4D85EE',
-                onClick: handleEditStudent,
-              },
-              {
-                label: 'apagar',
-                color: '#DE3B3B',
-                onClick: handleDeleteStudent,
-              },
-            ],
-          },
-        ]}
+        model={headers}
+        data={students.map(student => ({
+          id: student.id,
+          name: student.name,
+          email: student.email,
+          age: student.age,
+          actions,
+        }))}
       />
     </Container>
   );
